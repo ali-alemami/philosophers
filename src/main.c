@@ -6,23 +6,12 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:08:38 by aalemami          #+#    #+#             */
-/*   Updated: 2026/04/29 23:15:55 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/04/30 12:53:27 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	assign_argv_values(char **argv)
-{
-	t_info info;
-
-	info.number_of_philos = ft_atoi(argv[1]);
-	info.time_to_die = ft_atoi(argv[2]);
-	info.time_to_eat = ft_atoi(argv[3]);
-	info.time_to_sleep = ft_atoi(argv[4]);
-	if (argv[5])
-		info.maximum_eat_count = ft_atoi(argv[5]);
-}
 
 unsigned long long get_current_time_in_ms(void)
 {
@@ -37,9 +26,14 @@ void	*is_what(void *arg, char *str)
 	t_philo	philo;
 
 	philo = *(t_philo *)arg;
+	pthread_mutex_lock(philo.fork);
 	printf("%llu %d is %s\n", get_current_time_in_ms(), philo.number, str);
 }
 
+void	execution(t_philo *philos)
+{
+	
+}
 
 
 int	main(int argc, char **argv)

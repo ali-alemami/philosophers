@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/04/29 23:16:32 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/04/30 13:14:43 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef enum s_status
 {
+	initialized,
 	has_one_fork,
 	has_two_forks,
 	eating,
@@ -53,5 +54,7 @@ int		input_validation(char **argv);
 int		validate_int_limits(char **argv);
 
 // tokenization
+void	assign_argv_values(char **argv);
+
 
 #endif

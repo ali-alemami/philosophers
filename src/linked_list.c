@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization.c                                     :+:      :+:    :+:   */
+/*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/29 03:14:55 by aalemami          #+#    #+#             */
-/*   Updated: 2026/04/30 13:00:28 by aalemami         ###   ########.fr       */
+/*   Created: 2026/04/30 13:06:02 by aalemami          #+#    #+#             */
+/*   Updated: 2026/04/30 14:20:31 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	assign_argv_values(char **argv)
-{
-	t_info info;
+// we wanna create a cirual linked list, each philosopher will have a status and his fork initialized
 
-	info.number_of_philos = ft_atoi(argv[1]);
-	info.time_to_die = ft_atoi(argv[2]);
-	info.time_to_eat = ft_atoi(argv[3]);
-	info.time_to_sleep = ft_atoi(argv[4]);
-	if (argv[5])
-		info.maximum_eat_count = ft_atoi(argv[5]);
-}
 
-void	create_linked_list(t_info info)
+
+
+t_philo	*circualr_linked_list(char **argv, t_info *info)
 {
-	
+	t_philo	*head;
+	int		i;
+
+	i = 0;
+	while (i < info->number_of_philos)
+	{
+		head = malloc(sizeof(t_philo));
+		head->info = info;
+		head->status = initialized;
+		head->number = i;
+		pthread_mutex_init(&(head->fork), NULL);
+	}
 }
