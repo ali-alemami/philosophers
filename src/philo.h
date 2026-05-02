@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/02 13:36:55 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/02 22:15:31 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <limits.h>
 # include "libft.h"
 
 typedef enum s_status
@@ -47,17 +48,25 @@ typedef struct s_philo
 	t_info			*info;
 }					t_philo;
 
-
 // validation
-int	validate_all_args(char argc, char **argv);
+
+int		validate_all_args(char argc, char **argv);
 
 // tokenization
+
 t_info	assign_argv_values(char **argv);
 
 // linked list
-void	print_circular_list(t_philo *head);
-t_philo	*circualr_linked_list(t_info *info);
-void	lstclear(t_philo **lst);
 
+void	lstclear(t_philo **lst);
+t_philo	*circualr_linked_list(t_info *info);
+
+// utils
+
+void	ft_usleep(unsigned long long ms);
+void	ft_putstr_fd(char *s, int fd);
+int		ft_str_isdigit(char *str);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_atoi(const char *nptr);
 
 #endif

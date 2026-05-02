@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:06:02 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/02 13:24:33 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/02 17:53:59 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ static t_philo	*make_node(t_philo **head, t_info *info, int i)
 	if (!philo)
 	{
 		lstclear(head);
-		perror("malloc");
-		exit(1);
+		ft_putstr_fd("malloc allocation failed.\n", 2);
+		return (NULL);
 	}
 	philo->number = i;
 	philo->status = initialized;
@@ -95,14 +95,17 @@ static t_philo	*make_node(t_philo **head, t_info *info, int i)
 t_philo	*circualr_linked_list(t_info *info)
 {
 	t_philo	*head;
+	t_philo	*node;
 	int		i;
 
 	head = NULL;
 	i = 0;
-
 	while (i < info->number_of_philos)
 	{
-		lstadd_back(&head, make_node(&head, info, i));
+		node = make_node(&head, info, i);
+		if (!node)
+			return (NULL);
+		lstadd_back(&head, node);
 		i++;
 	}
 	return (head);

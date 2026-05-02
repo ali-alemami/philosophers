@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/29 03:14:55 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/02 13:49:18 by aalemami         ###   ########.fr       */
+/*   Created: 2026/05/02 18:22:43 by aalemami          #+#    #+#             */
+/*   Updated: 2026/05/02 22:13:51 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_info	assign_argv_values(char **argv)
+static unsigned long long get_current_time_in_ms(void)
 {
-	t_info info;
+	struct timeval	tv;
 
-	info.number_of_philos = ft_atoi(argv[1]);
-	info.time_to_die = ft_atoi(argv[2]);
-	info.time_to_eat = ft_atoi(argv[3]);
-	info.time_to_sleep = ft_atoi(argv[4]);
-	if (argv[5])
-		info.maximum_eat_count = ft_atoi(argv[5]);
-	return (info);
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+void	ft_usleep(unsigned long long ms)
+{
+	unsigned long long	start;
+
+	start = get_current_time_in_ms();
+	while (start + ms > get_current_time_in_ms())
+		usleep(500);
+}

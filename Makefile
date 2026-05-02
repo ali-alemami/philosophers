@@ -3,7 +3,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRC_FILES = \
-	main.c validation.c tokenization.c linked_list.c execution.c
+	main.c validation.c tokenization.c linked_list.c execution.c \
+	connector.c utils.c utils2.c
 
 SRC = $(addprefix src/, $(SRC_FILES))
 
