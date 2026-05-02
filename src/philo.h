@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/01 16:20:10 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/02 13:36:55 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ typedef struct s_philo
 
 
 // validation
-int		argc_validation(int argc);
-int		input_validation(char **argv);
-int		validate_int_limits(char **argv);
+int	validate_all_args(char argc, char **argv);
 
 // tokenization
 t_info	assign_argv_values(char **argv);

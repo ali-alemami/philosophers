@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:08:38 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/01 16:20:21 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/02 13:37:30 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	t_philo	*lst;
 	t_info	info;
 
-	if (argc_validation(argc) || input_validation(argv) || validate_int_limits(argv))
+	if (validate_all_args(argc, argv))
 		return (1);
 	info = assign_argv_values(argv);
 	lst = circualr_linked_list(&info);

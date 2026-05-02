@@ -6,13 +6,13 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 03:13:44 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/01 14:23:10 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/02 13:36:31 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	argc_validation(int argc)
+static int	argc_validation(int argc)
 {
 	if (argc != 5 && argc != 6)
 	{
@@ -25,7 +25,7 @@ int	argc_validation(int argc)
 	return (0);
 }
 
-int	input_validation(char **argv)
+static int	input_validation(char **argv)
 {
 	int	i;
 
@@ -59,7 +59,7 @@ static int	get_len(char *str)
 	return (len);
 }
 
-int	validate_int_limits(char **argv)
+static int	validate_int_limits(char **argv)
 {
 	int	i;
 
@@ -78,5 +78,12 @@ int	validate_int_limits(char **argv)
 		}
 		i++;
 	}
+	return (0);
+}
+
+int	validate_all_args(char argc, char **argv)
+{
+	if (argc_validation(argc) || input_validation(argv) || validate_int_limits(argv))
+		return (1);
 	return (0);
 }
