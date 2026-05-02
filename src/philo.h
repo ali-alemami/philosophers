@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/04/30 13:14:43 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/01 16:20:10 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,12 @@ int		input_validation(char **argv);
 int		validate_int_limits(char **argv);
 
 // tokenization
-void	assign_argv_values(char **argv);
+t_info	assign_argv_values(char **argv);
+
+// linked list
+void	print_circular_list(t_philo *head);
+t_philo	*circualr_linked_list(t_info *info);
+void	lstclear(t_philo **lst);
 
 
 #endif

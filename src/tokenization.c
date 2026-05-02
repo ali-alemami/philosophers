@@ -6,13 +6,13 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 03:14:55 by aalemami          #+#    #+#             */
-/*   Updated: 2026/04/30 13:00:28 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/01 13:34:38 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	assign_argv_values(char **argv)
+t_info	assign_argv_values(char **argv)
 {
 	t_info info;
 
@@ -22,9 +22,5 @@ void	assign_argv_values(char **argv)
 	info.time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
 		info.maximum_eat_count = ft_atoi(argv[5]);
-}
-
-void	create_linked_list(t_info info)
-{
-	
+	return (info);
 }
