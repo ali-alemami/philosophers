@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/03 20:17:06 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/03 22:53:26 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdlib.h>
 # include <limits.h>
 
-typedef enum s_status
+typedef enum s_philo_status
 {
 	INITIALIZED,
 	HAS_ONE_FORK,
@@ -29,7 +29,19 @@ typedef enum s_status
 	IS_SLEEPING,
 	IS_THINKING,
 	DEAD
-}	t_status;
+}	t_philo_status;
+
+typedef	enum s_fork_status
+{
+	UNLOCKED,
+	LOCKED
+}	t_fork_status;
+
+typedef struct s_fork
+{
+	pthread_mutex_t	mutex;
+	t_fork_status	status;
+}					t_fork;
 
 typedef struct s_info
 {
@@ -47,8 +59,8 @@ typedef struct s_philo
 	pthread_t			tid;
 	int					number;
 	unsigned long long	last_eat_time;
-	t_status			status;
-	pthread_mutex_t		fork;
+	t_philo_status		status;
+	t_fork				fork;
 	t_info				*info;
 	struct s_philo		*next;
 }						t_philo;
@@ -77,10 +89,11 @@ int					ft_atoi(const char *nptr);
 
 // simulation
 
-void				taken_first_fork(t_philo *philo);
-void				taken_second_fork(t_philo *philo);
+void				take_first_fork(t_philo *philo);
+void				take_second_fork(t_philo *philo);
 void				is_eating(t_philo *philo);
 void				is_sleeping(t_philo *philo);
+void				is_thinking(t_philo *philo);
 void				philo_died(t_philo *philo);
 void				simulation(t_philo *philo);
 

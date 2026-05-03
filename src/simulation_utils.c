@@ -6,22 +6,23 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:47:16 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/03 20:17:03 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/03 22:49:00 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	taken_first_fork(t_philo *philo)
+void	take_first_fork(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->fork);
+	pthread_mutex_lock(&philo->fork.mutex);
+	philo->fork.status = LOCKED;
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	printf("%llu %d has taken a fork\n", get_current_time_in_ms(), philo->number);
 	philo->status = HAS_ONE_FORK;
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 }
 
-void	taken_second_fork(t_philo *philo)
+void	take_second_fork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->next->fork);
 	pthread_mutex_lock(&philo->info->printf_mutex);
@@ -36,8 +37,10 @@ void	is_eating(t_philo *philo)
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	printf("%llu %d is eating\n", get_current_time_in_ms(), philo->number);
 	philo->status = IS_EATING;
-	pthread_mutex_unlock(&philo->info->printf_mutex);
 	ft_usleep(philo->info->time_to_eat);
+	pthread_mutex_unlock(&philo->fork);
+	pthread_mutex_unlock(&philo->next->fork);
+	pthread_mutex_unlock(&philo->info->printf_mutex);
 }
 
 void	is_sleeping(t_philo *philo)
@@ -49,10 +52,18 @@ void	is_sleeping(t_philo *philo)
 	ft_usleep(philo->info->time_to_sleep);
 }
 
+void	is_thinking(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->info->printf_mutex);
+	printf("%llu %d died\n", get_current_time_in_ms(), philo->number);
+	philo->status = IS_THINKING;
+	pthread_mutex_unlock(&philo->info->printf_mutex);
+}
+
 void	philo_died(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->printf_mutex);
-	printf("%llu %s died\n", get_current_time_in_ms(), philo->number);
+	printf("%llu %d died\n", get_current_time_in_ms(), philo->number);
 	philo->status = DEAD;
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 }

@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/03 20:16:28 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/03 22:31:18 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,11 @@ void	*philo_cycle(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	taken_fork(philo, philo->fork);
-	taken_fork(philo, philo->next->fork);
+	take_first_fork(philo);
+	take_second_fork(philo);
 	is_eating(philo);
 	is_sleeping(philo);
-	pthread_mutex_unlock(&philo->fork);
-	pthread_mutex_unlock(&philo->next->fork);
+	is_thinking(philo);
 	return (NULL);
 }
 
