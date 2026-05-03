@@ -6,21 +6,27 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:47:16 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/03 20:07:19 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/03 20:17:03 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	taken_fork(t_philo *philo, pthread_mutex_t *fork)
+void	taken_first_fork(t_philo *philo)
 {
-	pthread_mutex_lock(fork);
+	pthread_mutex_lock(&philo->fork);
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	printf("%llu %d has taken a fork\n", get_current_time_in_ms(), philo->number);
-	if (philo->status == INITIALIZED || philo->status == IS_THINKING)
-		philo->status = HAS_ONE_FORK;
-	else if (philo->status == HAS_ONE_FORK)
-		philo->status = HAS_TWO_FORKS;
+	philo->status = HAS_ONE_FORK;
+	pthread_mutex_unlock(&philo->info->printf_mutex);
+}
+
+void	taken_second_fork(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->next->fork);
+	pthread_mutex_lock(&philo->info->printf_mutex);
+	printf("%llu %d has taken a fork\n", get_current_time_in_ms(), philo->number);
+	philo->status = HAS_TWO_FORKS;
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 }
 

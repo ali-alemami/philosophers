@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/03 19:52:26 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/03 20:17:06 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,15 @@ int					ft_atoi(const char *nptr);
 
 // simulation
 
-void				taken_fork(t_philo *philo, pthread_mutex_t fork);
+void				taken_first_fork(t_philo *philo);
+void				taken_second_fork(t_philo *philo);
 void				is_eating(t_philo *philo);
 void				is_sleeping(t_philo *philo);
 void				philo_died(t_philo *philo);
 void				simulation(t_philo *philo);
 
 // connector
-void	connector(char **argv);
+void				connector(char **argv);
 
 
 #endif
