@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/02 13:43:38 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/03 22:26:29 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/03 23:54:09 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	destroy_all_mutexes(t_philo *node, int index)
 	i = 0;
 	while (i < index)
 	{
-		pthread_mutex_destroy(&node->fork);
+		pthread_mutex_destroy(&node->fork.mutex);
 		node = node->next;
 		i++;
 	}
@@ -37,7 +37,7 @@ static int	init_mutex_failure(t_philo **head, pthread_mutex_t *mutex, int i)
 	return (0);
 }
 
-int	initialize_all_mutexes(t_philo **head)
+static int	initialize_all_mutexes(t_philo **head)
 {
 	t_philo	*philo;
 	int		i;
@@ -46,13 +46,15 @@ int	initialize_all_mutexes(t_philo **head)
 	i = 0;
 	while (philo->next != *head)
 	{
-		if (init_mutex_failure(head, &philo->fork, i) != 0)
+		if (init_mutex_failure(head, &philo->fork.mutex, i) != 0)
 			return (1);
+		philo->fork.status = UNLOCKED;
 		philo = philo->next;
 		i++;
 	}
-	if (init_mutex_failure(head, &philo->fork, i) != 0)
+	if (init_mutex_failure(head, &philo->fork.mutex, i) != 0)
 			return (1);
+	philo->fork.status = UNLOCKED;
 	if (init_mutex_failure(head, &(*head)->info->printf_mutex, i + 1) != 0)
 			return (1);
 	return (0);
@@ -70,6 +72,7 @@ void	connector(char **argv)
 	if (initialize_all_mutexes(&head) != 0)
 		return ;
 	simulation(head);
+	destroy_all_mutexes(head, head->info->number_of_philos);
 	lstclear(&head);
 }
 

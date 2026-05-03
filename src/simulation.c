@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/03 22:31:18 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/04 00:29:29 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_for_all_philo_deaths(t_philo *philo)
 {
-	while (!philo)
+	while (philo)
 	{
 		if (philo->last_eat_time + philo->info->time_to_die > get_current_time_in_ms())
 		{
@@ -58,13 +58,18 @@ void	simulation(t_philo *head)
 	philo->info->start_of_simulation = get_current_time_in_ms();
 	set_last_eat_time(head);
 	i = 0;
-	while (i != philo->info->maximum_eat_count)
+	while (i < philo->info->number_of_philos)
 	{
-		pthread_create(&philo->tid, NULL, philo_cycle, &philo);
-		pthread_join(philo->tid, NULL);
+		pthread_create(&philo->tid, NULL, philo_cycle, philo);
 		philo = philo->next;
 		i++;
 	}
+	philo = head;
+	i = 0;
+	while (i < philo->info->number_of_philos)
+	{
+		pthread_join(philo->tid, NULL);
+    	philo = philo->next;
+    	i++;
+	}
 }
-
-	// philo1 take fork1 take fork2  starts eating philo2 sees fork busy w8 until phil1 finishes eating and goes to sleep then he takes the fork and starts eating
