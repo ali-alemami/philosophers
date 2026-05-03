@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/02 13:43:38 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/02 18:22:38 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/03 00:23:40 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ void	connector(char **argv)
 		return ;
 	if (initialize_all_mutexes(&head) != 0)
 		return ;
+	execution(head);
 }
 

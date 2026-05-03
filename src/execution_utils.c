@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/02 18:22:43 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/02 22:42:19 by aalemami         ###   ########.fr       */
+/*   Created: 2026/05/02 22:31:20 by aalemami          #+#    #+#             */
+/*   Updated: 2026/05/02 23:11:36 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long long get_current_time_in_ms(void)
+void	is_eating(t_philo *node)
 {
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	printf("%llu %d is eating\n", get_current_time_in_ms(), node->number);
+	ft_usleep(node->info->time_to_eat);
 }
 
-void	ft_usleep(unsigned long long ms)
+void	is_sleeping(t_philo *node)
 {
-	unsigned long long	start;
-
-	start = get_current_time_in_ms();
-	while (start + ms > get_current_time_in_ms())
-		usleep(500);
+	printf("%llu %d is sleeping\n", get_current_time_in_ms(), node->number);
+	ft_usleep(node->info->time_to_sleep);
 }
