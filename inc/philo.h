@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/03 23:50:11 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/04 12:03:31 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,6 @@ typedef enum s_philo_status
 	DEAD
 }	t_philo_status;
 
-typedef	enum s_fork_status
-{
-	UNLOCKED,
-	LOCKED
-}	t_fork_status;
-
-typedef struct s_fork
-{
-	pthread_mutex_t	mutex;
-	t_fork_status	status;
-}					t_fork;
-
 typedef struct s_info
 {
 	int					number_of_philos;
@@ -60,7 +48,7 @@ typedef struct s_philo
 	int					number;
 	unsigned long long	last_eat_time;
 	t_philo_status		status;
-	t_fork				fork;
+	pthread_mutex_t		fork;
 	t_info				*info;
 	struct s_philo		*next;
 }						t_philo;
