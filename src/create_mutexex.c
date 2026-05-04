@@ -6,18 +6,18 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 21:51:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/05 01:13:03 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/05 01:24:12 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-static pthread_mutex_t	*get_fork_mutex(t_philo *philo)
+pthread_mutex_t	*get_fork_mutex(t_philo *philo)
 {
 	return (&philo->fork);
 }
 
-static pthread_mutex_t	*get_status_mutex(t_philo *philo)
+pthread_mutex_t	*get_status_mutex(t_philo *philo)
 {
 	return (&philo->status_mutex.mutex);
 }

@@ -6,16 +6,11 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/02 13:43:38 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/04 22:00:48 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/05 01:25:58 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	init_all_mutexex(t_philo **head)
-{
-	
-}
 
 void	connector(char **argv)
 {
@@ -26,10 +21,11 @@ void	connector(char **argv)
 	head = circualr_linked_list(&info);
 	if (!head)
 		return ;
-	if (initialize_philos_forks(&head) != 0)
+	if (init_all_mutexex(&head) != 0)
 		return ;
 	simulation(head);
-	destroy_fork_mutexes(head, head->info->number_of_philos);
+	destroy_all_mutexex(head, get_fork_mutex, head->info->number_of_philos);
+	destroy_all_mutexex(head, get_status_mutex, head->info->number_of_philos);
 	lstclear(&head);
 }
 

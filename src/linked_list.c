@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:06:02 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/04 21:29:06 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/05 01:38:45 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static t_philo	*make_node(t_philo **head, t_info *info, int i)
 	}
 	philo->number = i;
 	philo->status_mutex.status = INITIALIZED;
+	philo->eat_count = 0;
 	if (!(*head))
 		(*head) = philo;
 	philo->next = *head;

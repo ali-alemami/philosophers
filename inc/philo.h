@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/04 21:38:48 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/05 01:38:14 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_philo
 {
 	pthread_t			tid;
 	int					number;
+	int					eat_count;
 	unsigned long long	last_eat_time;
 	t_status_mutex		status_mutex;
 	pthread_mutex_t		fork;
@@ -92,9 +93,17 @@ void				is_thinking(t_philo *philo);
 void				philo_died(t_philo *philo);
 void				simulation(t_philo *head);
 
+// create mutexex
+
+pthread_mutex_t	*get_fork_mutex(t_philo *philo);
+pthread_mutex_t	*get_status_mutex(t_philo *philo);
+
+void	destroy_all_mutexex(t_philo *head,
+	pthread_mutex_t *(*which_mutex)(t_philo *), int index);
+int					init_all_mutexex(t_philo **head);
+
 // connector
 
-void				destroy_fork_mutexes(t_philo *node, int index);
 void				connector(char **argv);
 
 

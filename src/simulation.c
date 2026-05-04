@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/04 21:16:41 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/05 01:45:46 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	*check_for_all_philo_deaths(void *arg)
 		i = 0;
 		while (i < philo->info->number_of_philos)
 		{
-			if (philo->status != DEAD && philo->last_eat_time + philo->info->time_to_die <= get_current_time_in_ms())
+			if (philo->status_mutex.status != DEAD && philo->last_eat_time + philo->info->time_to_die <= get_current_time_in_ms())
 				philo_died(philo);
-			if (philo->status != DEAD)
+			if (philo->status_mutex.status != DEAD)
 				flag = 1;
 			philo = philo->next;
 			i++;
@@ -54,18 +54,16 @@ void	set_last_eat_time(t_philo *head)
 void	*philo_cycle(void *arg)
 {
 	t_philo	*philo;
-	int		i;
 
-	i = 0;
 	philo = (t_philo *)arg;
-	while (philo->status != DEAD && i != philo->info->maximum_eat_count)
+	while (philo->status_mutex.status != DEAD && philo->eat_count != philo->info->maximum_eat_count)
 	{
 		take_first_fork(philo);
 		take_second_fork(philo);
 		is_eating(philo);
 		is_sleeping(philo);
 		is_thinking(philo);
-		i++;
+		philo->eat_count++;
 	}
 	return (NULL);
 }
