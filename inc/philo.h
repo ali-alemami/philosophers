@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/05 01:38:14 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/05 02:29:25 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,17 @@ typedef struct s_info
 	pthread_t			death_thread;
 }						t_info;
 
-typedef	struct s_status_mutex
-{
-	t_philo_status	status;
-	pthread_mutex_t	mutex;
-}					t_status_mutex;
-
 typedef struct s_philo
 {
 	pthread_t			tid;
 	int					number;
+	pthread_mutex_t		fork;
+	pthread_mutex_t		mutex;
+	t_philo_status		status;
 	int					eat_count;
 	unsigned long long	last_eat_time;
-	t_status_mutex		status_mutex;
-	pthread_mutex_t		fork;
-	t_info				*info;
 	struct s_philo		*next;
+	t_info				*info;
 }						t_philo;
 
 // validation

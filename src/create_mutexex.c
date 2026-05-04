@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 21:51:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/05 01:24:12 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/05 02:30:17 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ pthread_mutex_t	*get_fork_mutex(t_philo *philo)
 
 pthread_mutex_t	*get_status_mutex(t_philo *philo)
 {
-	return (&philo->status_mutex.mutex);
+	return (&philo->mutex);
 }
 
 void	destroy_all_mutexex(t_philo *head,
@@ -72,7 +72,7 @@ int	init_status_mutexex(t_philo **head)
 	i = 0;
 	while (philo->next != (*head))
 	{
-		if (pthread_mutex_init(&philo->status_mutex.mutex, NULL) != 0)
+		if (pthread_mutex_init(&philo->mutex, NULL) != 0)
 		{
 			destroy_all_mutexex(*head,
 				get_fork_mutex, philo->info->number_of_philos);
@@ -82,7 +82,7 @@ int	init_status_mutexex(t_philo **head)
 		philo = philo->next;
 		i++;
 	}
-	if (pthread_mutex_init(&philo->status_mutex.mutex, NULL) != 0)
+	if (pthread_mutex_init(&philo->mutex, NULL) != 0)
 	{
 		destroy_all_mutexex(*head,
 			get_fork_mutex, philo->info->number_of_philos);

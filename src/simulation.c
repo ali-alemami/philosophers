@@ -6,13 +6,13 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/05 01:45:46 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/05 02:30:50 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*check_for_all_philo_deaths(void *arg)
+void	*check_for_philos_deaths(void *arg)
 {
 	t_philo	*philo;
 	int		flag;
@@ -26,12 +26,15 @@ void	*check_for_all_philo_deaths(void *arg)
 		i = 0;
 		while (i < philo->info->number_of_philos)
 		{
-			if (philo->status_mutex.status != DEAD && philo->last_eat_time + philo->info->time_to_die <= get_current_time_in_ms())
+			pthread_mutex_lock(&philo->mutex);
+			if (philo->status != DEAD && philo->last_eat_time + philo->info->time_to_die <= get_current_time_in_ms())
 				philo_died(philo);
-			if (philo->status_mutex.status != DEAD)
+			if (philo->status != DEAD)
 				flag = 1;
+			pthread_mutex_unlock(&philo->mutex);
 			philo = philo->next;
 			i++;
+			ft_usleep(1);
 		}
 	}
 	return NULL;
@@ -56,7 +59,7 @@ void	*philo_cycle(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (philo->status_mutex.status != DEAD && philo->eat_count != philo->info->maximum_eat_count)
+	while (philo->status != DEAD && philo->eat_count != philo->info->maximum_eat_count)
 	{
 		take_first_fork(philo);
 		take_second_fork(philo);
@@ -75,7 +78,7 @@ void	simulation(t_philo *head)
 
 	philo = head;
 	set_last_eat_time(head);
-	pthread_create(&head->info->death_thread, NULL, check_for_all_philo_deaths, head);
+	pthread_create(&head->info->death_thread, NULL, check_for_philos_deaths, head);
 	i = 0;
 	while (i < philo->info->number_of_philos)
 	{
