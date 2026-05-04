@@ -6,27 +6,42 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/04 00:29:29 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/04 21:16:41 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	check_for_all_philo_deaths(t_philo *philo)
+void	*check_for_all_philo_deaths(void *arg)
 {
-	while (philo)
+	t_philo	*philo;
+	int		flag;
+	int		i;
+
+	philo = (t_philo *)arg;
+	flag = 1;
+	while (flag == 1)
 	{
-		if (philo->last_eat_time + philo->info->time_to_die > get_current_time_in_ms())
+		flag = 0;
+		i = 0;
+		while (i < philo->info->number_of_philos)
 		{
-			philo_died(philo);
+			if (philo->status != DEAD && philo->last_eat_time + philo->info->time_to_die <= get_current_time_in_ms())
+				philo_died(philo);
+			if (philo->status != DEAD)
+				flag = 1;
+			philo = philo->next;
+			i++;
 		}
 	}
+	return NULL;
 }
 
 void	set_last_eat_time(t_philo *head)
 {
 	t_philo	*philo;
 
+	head->info->start_of_simulation = get_current_time_in_ms();
 	head->last_eat_time = head->info->start_of_simulation;
 	philo = head->next;
 	while (philo != head)
@@ -39,24 +54,30 @@ void	set_last_eat_time(t_philo *head)
 void	*philo_cycle(void *arg)
 {
 	t_philo	*philo;
+	int		i;
 
+	i = 0;
 	philo = (t_philo *)arg;
-	take_first_fork(philo);
-	take_second_fork(philo);
-	is_eating(philo);
-	is_sleeping(philo);
-	is_thinking(philo);
+	while (philo->status != DEAD && i != philo->info->maximum_eat_count)
+	{
+		take_first_fork(philo);
+		take_second_fork(philo);
+		is_eating(philo);
+		is_sleeping(philo);
+		is_thinking(philo);
+		i++;
+	}
 	return (NULL);
 }
 
 void	simulation(t_philo *head)
 {
 	t_philo	*philo;
-	int	i;
+	int		i;
 
 	philo = head;
-	philo->info->start_of_simulation = get_current_time_in_ms();
 	set_last_eat_time(head);
+	pthread_create(&head->info->death_thread, NULL, check_for_all_philo_deaths, head);
 	i = 0;
 	while (i < philo->info->number_of_philos)
 	{
@@ -72,4 +93,5 @@ void	simulation(t_philo *head)
     	philo = philo->next;
     	i++;
 	}
+	pthread_join(head->info->death_thread, NULL);
 }

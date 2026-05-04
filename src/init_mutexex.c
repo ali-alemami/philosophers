@@ -1,35 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   connector.c                                        :+:      :+:    :+:   */
+/*   init_mutexex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/02 13:43:38 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/04 22:00:48 by aalemami         ###   ########.fr       */
+/*   Created: 2026/05/05 01:10:51 by aalemami          #+#    #+#             */
+/*   Updated: 2026/05/05 01:12:44 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "philo.h"
-
-static int	init_all_mutexex(t_philo **head)
-{
-	
-}
-
-void	connector(char **argv)
-{
-	t_philo	*head;
-	t_info	info;
-
-	info = assign_argv_values(argv);
-	head = circualr_linked_list(&info);
-	if (!head)
-		return ;
-	if (initialize_philos_forks(&head) != 0)
-		return ;
-	simulation(head);
-	destroy_fork_mutexes(head, head->info->number_of_philos);
-	lstclear(&head);
-}
 

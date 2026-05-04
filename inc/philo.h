@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/04 12:03:31 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/04 21:38:48 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,21 @@ typedef struct s_info
 	int					maximum_eat_count;
 	unsigned long long	start_of_simulation;
 	pthread_mutex_t		printf_mutex;
+	pthread_t			death_thread;
 }						t_info;
+
+typedef	struct s_status_mutex
+{
+	t_philo_status	status;
+	pthread_mutex_t	mutex;
+}					t_status_mutex;
 
 typedef struct s_philo
 {
 	pthread_t			tid;
 	int					number;
 	unsigned long long	last_eat_time;
-	t_philo_status		status;
+	t_status_mutex		status_mutex;
 	pthread_mutex_t		fork;
 	t_info				*info;
 	struct s_philo		*next;
@@ -87,7 +94,7 @@ void				simulation(t_philo *head);
 
 // connector
 
-void				destroy_all_mutexes(t_philo *node, int index);
+void				destroy_fork_mutexes(t_philo *node, int index);
 void				connector(char **argv);
 
 

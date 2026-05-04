@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:06:02 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/03 22:02:50 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/04 21:29:06 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static t_philo	*make_node(t_philo **head, t_info *info, int i)
 		return (NULL);
 	}
 	philo->number = i;
-	philo->status = INITIALIZED;
+	philo->status_mutex.status = INITIALIZED;
 	if (!(*head))
 		(*head) = philo;
 	philo->next = *head;

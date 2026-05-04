@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:47:16 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/04 12:04:25 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/04 21:09:16 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 void	take_first_fork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->fork);
+	if (philo->status == DEAD)
+	{
+		pthread_mutex_unlock(&philo->fork);
+		return ;
+	}
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	printf("%llu %d has taken a fork\n", get_current_time_in_ms(), philo->number);
 	philo->status = HAS_ONE_FORK;
@@ -23,7 +28,15 @@ void	take_first_fork(t_philo *philo)
 
 void	take_second_fork(t_philo *philo)
 {
+	if (philo->status == DEAD)
+		return ;
 	pthread_mutex_lock(&philo->next->fork);
+	if (philo->status == DEAD)
+	{
+		pthread_mutex_unlock(&philo->fork);
+		pthread_mutex_unlock(&philo->next->fork);
+		return ;
+	}
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	printf("%llu %d has taken a fork\n", get_current_time_in_ms(), philo->number);
 	philo->status = HAS_TWO_FORKS;
@@ -32,6 +45,12 @@ void	take_second_fork(t_philo *philo)
 
 void	is_eating(t_philo *philo)
 {
+	if (philo->status == DEAD)
+	{
+		pthread_mutex_unlock(&philo->fork);
+		pthread_mutex_unlock(&philo->next->fork);
+		return ;
+	}
 	philo->last_eat_time = get_current_time_in_ms();
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	printf("%llu %d is eating\n", get_current_time_in_ms(), philo->number);
@@ -44,6 +63,8 @@ void	is_eating(t_philo *philo)
 
 void	is_sleeping(t_philo *philo)
 {
+	if (philo->status == DEAD)
+		return ;
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	printf("%llu %d is sleeping\n", get_current_time_in_ms(), philo->number);
 	philo->status = IS_SLEEPING;
@@ -53,6 +74,8 @@ void	is_sleeping(t_philo *philo)
 
 void	is_thinking(t_philo *philo)
 {
+	if (philo->status == DEAD)
+		return ;
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	printf("%llu %d is thinking\n", get_current_time_in_ms(), philo->number);
 	philo->status = IS_THINKING;
