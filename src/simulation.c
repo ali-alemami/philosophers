@@ -6,11 +6,18 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 01:04:38 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 01:14:52 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	helper(int *i, int *flag)
+{
+	ft_usleep(5);
+	*i = 0;
+	*flag = 0;
+}
 
 static void	*check_for_philos_deaths(void *arg)
 {
@@ -34,9 +41,7 @@ static void	*check_for_philos_deaths(void *arg)
 		{
 			if (flag == i)
 				return (end_simulation(philo));
-			ft_usleep(5);
-			i = 0;
-			flag = 0;
+			helper(&i, &flag);
 		}
 	}
 	return (NULL);

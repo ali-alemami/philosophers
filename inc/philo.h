@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 01:10:38 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 01:12:51 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,5 @@ int					ft_atoi(const char *nptr);
 
 // validation
 int					validate_all_args(char argc, char **argv);
-		
+
 #endif
