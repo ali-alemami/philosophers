@@ -6,13 +6,13 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/02 18:22:43 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/06 22:49:42 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 01:05:13 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long long get_current_time_in_ms(void)
+unsigned long long	get_current_time_in_ms(void)
 {
 	struct timeval	tv;
 
@@ -27,4 +27,14 @@ void	ft_usleep(unsigned long long ms)
 	start = get_current_time_in_ms();
 	while (get_current_time_in_ms() - start < ms)
 		usleep(500);
+}
+
+pthread_mutex_t	*get_fork_mutex(t_philo *philo)
+{
+	return (&philo->fork);
+}
+
+pthread_mutex_t	*get_status_mutex(t_philo *philo)
+{
+	return (&philo->mutex);
 }

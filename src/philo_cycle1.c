@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:47:16 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 00:30:03 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 01:00:43 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	take_first_fork(t_philo *philo)
 		pthread_mutex_unlock(get_first_fork(philo));
 		return (0);
 	}
-	printf("%llu %d has taken a fork\n", get_current_time_in_ms(), philo->number);
+	printf("%llu %d has taken a fork\n",
+		get_current_time_in_ms(), philo->number);
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 	return (1);
 }
@@ -56,7 +57,8 @@ int	take_second_fork(t_philo *philo)
 		pthread_mutex_unlock(get_second_fork(philo));
 		return (0);
 	}
-	printf("%llu %d has taken a fork\n", get_current_time_in_ms(), philo->number);
+	printf("%llu %d has taken a fork\n",
+		get_current_time_in_ms(), philo->number);
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 01:05:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/06 21:56:37 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 01:05:19 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,23 @@ unsigned long long	get_last_eat_time(t_philo *philo)
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	res = philo->last_eat_time;
 	pthread_mutex_unlock(&philo->info->printf_mutex);
-	return (res);	
+	return (res);
+}
+
+int	philo_eat_count(t_philo *philo)
+{
+	int	res;
+
+	pthread_mutex_lock(&philo->info->printf_mutex);
+	res = philo->eat_count >= philo->info->maximum_eat_count;
+	pthread_mutex_unlock(&philo->info->printf_mutex);
+	return (res);
+}
+
+void	*end_simulation(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->info->printf_mutex);
+	philo->info->end_simulation = 1;
+	pthread_mutex_unlock(&philo->info->printf_mutex);
+	return (NULL);
 }

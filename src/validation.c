@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 03:13:44 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/02 22:12:23 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 00:59:22 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	argc_validation(int argc)
 		ft_putstr_fd("Error: wrong number of arguments\n", 2);
 		ft_putstr_fd("Usage: ./philo [number_of_philosophers] ", 2);
 		ft_putstr_fd("[time_to_die] [time_to_eat] [time_to_sleep]\n", 2);
-		ft_putstr_fd("[number_of_times_each_philosopher_must_eat] (optinal argument)\n", 2);
+		ft_putstr_fd("[number_of_times_each_philosopher_must_eat]", 2);
+		ft_putstr_fd("(optinal argument)\n", 2);
 		return (1);
 	}
 	return (0);
@@ -83,7 +84,8 @@ static int	validate_int_limits(char **argv)
 
 int	validate_all_args(char argc, char **argv)
 {
-	if (argc_validation(argc) || input_validation(argv) || validate_int_limits(argv))
+	if (argc_validation(argc) || input_validation(argv)
+		|| validate_int_limits(argv))
 		return (1);
 	return (0);
 }

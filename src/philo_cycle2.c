@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 01:03:33 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/06 22:54:58 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 01:00:10 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	is_sleeping(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	if (!philo->info->end_simulation)
-		printf("%llu %d is sleeping\n", get_current_time_in_ms(), philo->number);
+		printf("%llu %d is sleeping\n",
+			get_current_time_in_ms(), philo->number);
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 	ft_usleep(philo->info->time_to_sleep);
 }
@@ -43,14 +44,16 @@ void	is_thinking(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	if (!philo->info->end_simulation)
-		printf("%llu %d is thinking\n", get_current_time_in_ms(), philo->number);
+		printf("%llu %d is thinking\n",
+			get_current_time_in_ms(), philo->number);
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 }
 
 void	*kill_philo(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->printf_mutex);
-	printf("%llu %d died\n", get_current_time_in_ms(), philo->number);
+	printf("%llu %d died\n",
+		get_current_time_in_ms(), philo->number);
 	philo->info->end_simulation = 1;
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 	return (NULL);

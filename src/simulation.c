@@ -6,29 +6,11 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 00:37:21 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 01:04:38 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	philo_eat_count(t_philo *philo)
-{
-	int	res;
-
-	pthread_mutex_lock(&philo->info->printf_mutex);
-	res = philo->eat_count >= philo->info->maximum_eat_count;
-	pthread_mutex_unlock(&philo->info->printf_mutex);
-	return (res);
-}
-
-static void	*end_simulation(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->info->printf_mutex);
-	philo->info->end_simulation = 1;
-	pthread_mutex_unlock(&philo->info->printf_mutex);
-	return (NULL);
-}
 
 static void	*check_for_philos_deaths(void *arg)
 {
@@ -43,7 +25,8 @@ static void	*check_for_philos_deaths(void *arg)
 	{
 		if (philo->info->maximum_eat_count != -1 && philo_eat_count(philo))
 			flag++;
-		if (get_current_time_in_ms() >= get_last_eat_time(philo) + philo->info->time_to_die)
+		if (get_current_time_in_ms()
+			>= get_last_eat_time(philo) + philo->info->time_to_die)
 			return (kill_philo(philo));
 		i++;
 		philo = philo->next;
@@ -56,7 +39,7 @@ static void	*check_for_philos_deaths(void *arg)
 			flag = 0;
 		}
 	}
-	return NULL;
+	return (NULL);
 }
 
 static void	set_first_last_eat_time(t_philo *head)
@@ -105,7 +88,8 @@ void	simulation(t_philo *head)
 
 	philo = head;
 	set_first_last_eat_time(head);
-	pthread_create(&head->info->death_thread, NULL, check_for_philos_deaths, head);
+	pthread_create(&head->info->death_thread, NULL,
+		check_for_philos_deaths, head);
 	i = 0;
 	while (i < philo->info->number_of_philos)
 	{
@@ -118,8 +102,8 @@ void	simulation(t_philo *head)
 	while (i < philo->info->number_of_philos)
 	{
 		pthread_join(philo->tid, NULL);
-    	philo = philo->next;
-    	i++;
+		philo = philo->next;
+		i++;
 	}
 	pthread_join(head->info->death_thread, NULL);
 }

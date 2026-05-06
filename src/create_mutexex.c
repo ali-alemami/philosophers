@@ -6,21 +6,11 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 21:51:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/06 21:58:34 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 01:04:00 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
-
-pthread_mutex_t	*get_fork_mutex(t_philo *philo)
-{
-	return (&philo->fork);
-}
-
-pthread_mutex_t	*get_status_mutex(t_philo *philo)
-{
-	return (&philo->mutex);
-}
 
 void	destroy_all_mutexex(t_philo *head,
 	pthread_mutex_t *(*which_mutex)(t_philo *), int index)
