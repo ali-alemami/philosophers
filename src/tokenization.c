@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 03:14:55 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/03 13:45:32 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/06 03:49:14 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_info	assign_argv_values(char **argv)
 		info.maximum_eat_count = ft_atoi(argv[5]);
 	else
 		info.maximum_eat_count = -1;
+	info.end_simulation = 0;
 	return (info);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:08:38 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/02 18:23:18 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/06 00:56:16 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,3 @@ int	main(int argc, char **argv)
 	connector(argv);
 	return (0);
 }
-
-//n die eat sleep cycle_count

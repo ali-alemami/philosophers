@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/05 02:29:25 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/06 04:00:53 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_info
 	unsigned long long	start_of_simulation;
 	pthread_mutex_t		printf_mutex;
 	pthread_t			death_thread;
+	int					end_simulation;
 }						t_info;
 
 typedef struct s_philo
@@ -79,14 +80,27 @@ int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_atoi(const char *nptr);
 
 // simulation
-
-void				take_first_fork(t_philo *philo);
-void				take_second_fork(t_philo *philo);
-void				is_eating(t_philo *philo);
-void				is_sleeping(t_philo *philo);
-void				is_thinking(t_philo *philo);
-void				philo_died(t_philo *philo);
+int	is_dead(t_philo *philo);
 void				simulation(t_philo *head);
+
+// philo cycle
+
+void	take_first_fork(t_philo *philo);
+void	take_second_fork(t_philo *philo);
+void	is_eating(t_philo *philo);
+void	is_sleeping(t_philo *philo);
+void	is_thinking(t_philo *philo);
+void	kill_philo(t_philo *philo);
+
+// protected data
+
+int	is_dead(t_philo *philo);
+void	set_status(t_philo *philo, t_philo_status status);
+void	set_last_eat_time_and_status(t_philo *philo);
+void	print_message(t_philo *philo, char *str);
+int	get_end_of_simulation_value(t_philo *philo);
+
+
 
 // create mutexex
 

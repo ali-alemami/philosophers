@@ -4,8 +4,9 @@ CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lpthread
 
 SRC_FILES = \
-	main.c validation.c tokenization.c linked_list.c simulation.c \
-	connector.c utils.c utils2.c simulation_utils.c create_mutexex.c
+	main.c validation.c tokenization.c linked_list.c create_mutexex.c \
+	simulation.c philo_cycle1.c philo_cycle2.c utils1.c utils2.c \
+	protected_data.c connector.c
 
 SRC = $(addprefix src/, $(SRC_FILES))
 

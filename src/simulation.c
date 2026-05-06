@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/05 02:30:50 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/06 04:03:00 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	*check_for_philos_deaths(void *arg)
 
 	philo = (t_philo *)arg;
 	flag = 1;
+	i = 0;
 	while (flag == 1)
 	{
 		flag = 0;
@@ -27,8 +28,12 @@ void	*check_for_philos_deaths(void *arg)
 		while (i < philo->info->number_of_philos)
 		{
 			pthread_mutex_lock(&philo->mutex);
-			if (philo->status != DEAD && philo->last_eat_time + philo->info->time_to_die <= get_current_time_in_ms())
-				philo_died(philo);
+			if (philo->status != DEAD && get_current_time_in_ms() >= philo->last_eat_time + philo->info->time_to_die)
+			{
+				kill_philo(philo);
+				pthread_mutex_unlock(&philo->mutex);
+				return (NULL);
+			}
 			if (philo->status != DEAD)
 				flag = 1;
 			pthread_mutex_unlock(&philo->mutex);
@@ -40,7 +45,7 @@ void	*check_for_philos_deaths(void *arg)
 	return NULL;
 }
 
-void	set_last_eat_time(t_philo *head)
+void	set_first_last_eat_time(t_philo *head)
 {
 	t_philo	*philo;
 
@@ -59,14 +64,13 @@ void	*philo_cycle(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (philo->status != DEAD && philo->eat_count != philo->info->maximum_eat_count)
+	while (!is_dead(philo) && get_end_of_simulation_value(philo) != 1)
 	{
 		take_first_fork(philo);
 		take_second_fork(philo);
 		is_eating(philo);
 		is_sleeping(philo);
 		is_thinking(philo);
-		philo->eat_count++;
 	}
 	return (NULL);
 }
@@ -77,7 +81,7 @@ void	simulation(t_philo *head)
 	int		i;
 
 	philo = head;
-	set_last_eat_time(head);
+	set_first_last_eat_time(head);
 	pthread_create(&head->info->death_thread, NULL, check_for_philos_deaths, head);
 	i = 0;
 	while (i < philo->info->number_of_philos)
