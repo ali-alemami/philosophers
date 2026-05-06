@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/06 23:06:30 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 00:37:21 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	*check_for_philos_deaths(void *arg)
 	flag = 0;
 	while (i < philo->info->number_of_philos)
 	{
-		if (philo->info->maximum_eat_count != -1 && philo_eat_count(philo) >= philo->info->maximum_eat_count)
+		if (philo->info->maximum_eat_count != -1 && philo_eat_count(philo))
 			flag++;
 		if (get_current_time_in_ms() >= get_last_eat_time(philo) + philo->info->time_to_die)
 			return (kill_philo(philo));
@@ -85,12 +85,12 @@ static void	*philo_cycle(void *arg)
 		pthread_mutex_unlock(&philo->fork);
 		return (NULL);
 	}
-	if (philo->number % 2 == 1)
-		ft_usleep(15);
 	while (get_end_of_simulation_value(philo) != 1)
 	{
-		take_first_fork(philo);
-		take_second_fork(philo);
+		if (!take_first_fork(philo))
+			break ;
+		if (!take_second_fork(philo))
+			break ;
 		is_eating(philo);
 		is_sleeping(philo);
 		is_thinking(philo);

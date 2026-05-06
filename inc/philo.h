@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/06 22:35:33 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 00:30:12 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void				simulation(t_philo *head);
 
 // philo cycle
 
-void				take_first_fork(t_philo *philo);
-void				take_second_fork(t_philo *philo);
+int					take_first_fork(t_philo *philo);
+int					take_second_fork(t_philo *philo);
 void				is_eating(t_philo *philo);
 void				is_sleeping(t_philo *philo);
 void				is_thinking(t_philo *philo);
