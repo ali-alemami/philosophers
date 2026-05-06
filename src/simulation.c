@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/06 04:03:00 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/06 19:44:10 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,16 @@
 void	*check_for_philos_deaths(void *arg)
 {
 	t_philo	*philo;
-	int		flag;
-	int		i;
 
 	philo = (t_philo *)arg;
-	flag = 1;
-	i = 0;
-	while (flag == 1)
+	while (1)
 	{
-		flag = 0;
-		i = 0;
-		while (i < philo->info->number_of_philos)
+		if (get_current_time_in_ms() >= get_last_eat_time(philo) + philo->info->time_to_die)
 		{
-			pthread_mutex_lock(&philo->mutex);
-			if (philo->status != DEAD && get_current_time_in_ms() >= philo->last_eat_time + philo->info->time_to_die)
-			{
-				kill_philo(philo);
-				pthread_mutex_unlock(&philo->mutex);
-				return (NULL);
-			}
-			if (philo->status != DEAD)
-				flag = 1;
-			pthread_mutex_unlock(&philo->mutex);
-			philo = philo->next;
-			i++;
-			ft_usleep(1);
+			kill_philo(philo);
+			return (NULL);
 		}
+		philo = philo->next;
 	}
 	return NULL;
 }
@@ -64,7 +48,7 @@ void	*philo_cycle(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (!is_dead(philo) && get_end_of_simulation_value(philo) != 1)
+	while (get_end_of_simulation_value(philo) != 1)
 	{
 		take_first_fork(philo);
 		take_second_fork(philo);

@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/06 04:00:53 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/06 18:58:05 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_atoi(const char *nptr);
 
 // simulation
-int	is_dead(t_philo *philo);
+int					is_dead(t_philo *philo);
 void				simulation(t_philo *head);
 
 // philo cycle
@@ -99,7 +99,7 @@ void	set_status(t_philo *philo, t_philo_status status);
 void	set_last_eat_time_and_status(t_philo *philo);
 void	print_message(t_philo *philo, char *str);
 int	get_end_of_simulation_value(t_philo *philo);
-
+unsigned long long	get_last_eat_time(t_philo *philo);
 
 
 // create mutexex
