@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 21:51:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/05 02:30:17 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/06 21:58:34 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	destroy_all_mutexex(t_philo *head,
 	}
 }
 
-int	init_fork_mutexex(t_philo **head)
+static int	init_fork_mutexex(t_philo **head)
 {
 	t_philo	*philo;
 	int		i;
@@ -63,7 +63,7 @@ int	init_fork_mutexex(t_philo **head)
 	return (0);
 }
 
-int	init_status_mutexex(t_philo **head)
+static int	init_status_mutexex(t_philo **head)
 {
 	t_philo	*philo;
 	int		i;

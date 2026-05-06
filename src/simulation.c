@@ -6,30 +6,60 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/06 19:44:10 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/06 22:35:59 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*check_for_philos_deaths(void *arg)
+static int	philo_eat_count(t_philo *philo)
+{
+	int	res;
+
+	pthread_mutex_lock(&philo->info->printf_mutex);
+	res = philo->eat_count >= philo->info->maximum_eat_count;
+	pthread_mutex_unlock(&philo->info->printf_mutex);
+	return (res);
+}
+
+static void	*end_simulation(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->info->printf_mutex);
+	philo->info->end_simulation = 1;
+	pthread_mutex_unlock(&philo->info->printf_mutex);
+	return (NULL);
+}
+
+static void	*check_for_philos_deaths(void *arg)
 {
 	t_philo	*philo;
+	int		flag;
+	int		i;
 
 	philo = (t_philo *)arg;
-	while (1)
+	i = 0;
+	flag = 0;
+	while (i < philo->info->number_of_philos)
 	{
+		if (philo->info->maximum_eat_count != -1 && philo_eat_count(philo) >= philo->info->maximum_eat_count)
+			flag++;
 		if (get_current_time_in_ms() >= get_last_eat_time(philo) + philo->info->time_to_die)
-		{
-			kill_philo(philo);
-			return (NULL);
-		}
+			return (kill_philo(philo));
+		i++;
 		philo = philo->next;
+		if (i == philo->info->number_of_philos)
+		{
+			if (flag == i)
+				return (end_simulation(philo));
+			ft_usleep(5);
+			i = 0;
+			flag = 0;
+		}
 	}
 	return NULL;
 }
 
-void	set_first_last_eat_time(t_philo *head)
+static void	set_first_last_eat_time(t_philo *head)
 {
 	t_philo	*philo;
 
@@ -43,7 +73,7 @@ void	set_first_last_eat_time(t_philo *head)
 	}
 }
 
-void	*philo_cycle(void *arg)
+static void	*philo_cycle(void *arg)
 {
 	t_philo	*philo;
 

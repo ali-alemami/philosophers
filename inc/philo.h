@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/06 18:58:05 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/06 22:35:33 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,34 +80,28 @@ int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_atoi(const char *nptr);
 
 // simulation
-int					is_dead(t_philo *philo);
+
 void				simulation(t_philo *head);
 
 // philo cycle
 
-void	take_first_fork(t_philo *philo);
-void	take_second_fork(t_philo *philo);
-void	is_eating(t_philo *philo);
-void	is_sleeping(t_philo *philo);
-void	is_thinking(t_philo *philo);
-void	kill_philo(t_philo *philo);
+void				take_first_fork(t_philo *philo);
+void				take_second_fork(t_philo *philo);
+void				is_eating(t_philo *philo);
+void				is_sleeping(t_philo *philo);
+void				is_thinking(t_philo *philo);
+void				*kill_philo(t_philo *philo);
 
 // protected data
 
-int	is_dead(t_philo *philo);
-void	set_status(t_philo *philo, t_philo_status status);
-void	set_last_eat_time_and_status(t_philo *philo);
-void	print_message(t_philo *philo, char *str);
-int	get_end_of_simulation_value(t_philo *philo);
+int					get_end_of_simulation_value(t_philo *philo);
 unsigned long long	get_last_eat_time(t_philo *philo);
-
 
 // create mutexex
 
-pthread_mutex_t	*get_fork_mutex(t_philo *philo);
-pthread_mutex_t	*get_status_mutex(t_philo *philo);
-
-void	destroy_all_mutexex(t_philo *head,
+pthread_mutex_t		*get_fork_mutex(t_philo *philo);
+pthread_mutex_t		*get_status_mutex(t_philo *philo);
+void				destroy_all_mutexex(t_philo *head,
 	pthread_mutex_t *(*which_mutex)(t_philo *), int index);
 int					init_all_mutexex(t_philo **head);
 
