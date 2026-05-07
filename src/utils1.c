@@ -20,6 +20,11 @@ unsigned long long	get_current_time_in_ms(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+unsigned long long	get_timestamp(t_philo *philo)
+{
+	return (get_current_time_in_ms() - philo->info->start_of_simulation);
+}
+
 void	ft_usleep(unsigned long long ms)
 {
 	unsigned long long	start;

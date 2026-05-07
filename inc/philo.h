@@ -77,6 +77,7 @@ void				simulation(t_philo *head);
 
 // utils
 unsigned long long	get_current_time_in_ms(void);
+unsigned long long	get_timestamp(t_philo *philo);
 void				ft_usleep(unsigned long long ms);
 pthread_mutex_t		*get_fork_mutex(t_philo *philo);
 void				ft_putstr_fd(char *s, int fd);

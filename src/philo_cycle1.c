@@ -41,7 +41,7 @@ int	take_first_fork(t_philo *philo)
 		return (0);
 	}
 	printf("%llu %d has taken a fork\n",
-		get_current_time_in_ms(), philo->number + 1);
+		get_timestamp(philo), philo->number + 1);
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 	return (1);
 }
@@ -58,7 +58,7 @@ int	take_second_fork(t_philo *philo)
 		return (0);
 	}
 	printf("%llu %d has taken a fork\n",
-		get_current_time_in_ms(), philo->number + 1);
+		get_timestamp(philo), philo->number + 1);
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 	return (1);
 }

@@ -33,7 +33,7 @@ static void	*check_for_philos_deaths(void *arg)
 		{
 			if (flag == i)
 				return (end_simulation(philo));
-			ft_usleep(2);
+			ft_usleep(1);
 			i = 0;
 			flag = 0;
 		}
