@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 04:05:22 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 14:05:08 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static void	*philo_cycle(void *arg)
 		pthread_mutex_unlock(&philo->fork);
 		return (NULL);
 	}
+	if (philo->number % 2 == 0)
+		ft_usleep(philo->info->time_to_eat);
 	while (get_end_of_simulation_value(philo) != 1)
 	{
 		if (!take_first_fork(philo))

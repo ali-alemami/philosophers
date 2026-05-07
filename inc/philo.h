@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 03:44:42 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 13:41:13 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_philo
 }						t_philo;
 
 // create mutexex
-void				destroy_all_mutexex(t_philo *head,
+void				destroy_fork_mutexex(t_philo *head,
 						pthread_mutex_t *(*which_mutex)(t_philo *), int index);
 int					init_all_mutexex(t_philo **head);
 

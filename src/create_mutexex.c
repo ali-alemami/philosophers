@@ -6,13 +6,13 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 21:51:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 03:44:42 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 13:43:34 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-void	destroy_all_mutexex(t_philo *head,
+void	destroy_fork_mutexex(t_philo *head,
 	pthread_mutex_t *(*which_mutex)(t_philo *), int index)
 {
 	t_philo	*philo;
@@ -39,7 +39,7 @@ static int	init_fork_mutexex(t_philo **head)
 	{
 		if (pthread_mutex_init(&philo->fork, NULL) != 0)
 		{
-			destroy_all_mutexex(*head, get_fork_mutex, i);
+			destroy_fork_mutexex(*head, get_fork_mutex, i);
 			return (1);
 		}
 		philo = philo->next;
@@ -47,7 +47,7 @@ static int	init_fork_mutexex(t_philo **head)
 	}
 	if (pthread_mutex_init(&philo->fork, NULL) != 0)
 	{
-		destroy_all_mutexex(*head, get_fork_mutex, i);
+		destroy_fork_mutexex(*head, get_fork_mutex, i);
 		return (1);
 	}
 	return (0);
@@ -62,7 +62,7 @@ int	init_all_mutexex(t_philo **head)
 	}
 	if (pthread_mutex_init(&(*head)->info->printf_mutex, NULL) != 0)
 	{
-		destroy_all_mutexex(*head,
+		destroy_fork_mutexex(*head,
 			get_fork_mutex, (*head)->info->number_of_philos);
 		lstclear(head);
 		return (1);

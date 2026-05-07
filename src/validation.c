@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 03:13:44 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 01:34:48 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 04:19:32 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	argc_validation(int argc)
 		ft_putstr_fd("Usage: ./philo [number_of_philosophers] ", 2);
 		ft_putstr_fd("[time_to_die] [time_to_eat] [time_to_sleep]\n", 2);
 		ft_putstr_fd("[number_of_times_each_philosopher_must_eat]", 2);
-		ft_putstr_fd("(optinal argument)\n", 2);
+		ft_putstr_fd("(optional argument)\n", 2);
 		return (1);
 	}
 	return (0);
