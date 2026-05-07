@@ -6,13 +6,13 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:47:16 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 01:00:43 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:37:40 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static pthread_mutex_t	*get_first_fork(t_philo *philo)
+pthread_mutex_t	*get_first_fork(t_philo *philo)
 {
 	if (&philo->fork < &philo->next->fork)
 		return (&philo->fork);
@@ -21,7 +21,7 @@ static pthread_mutex_t	*get_first_fork(t_philo *philo)
 	return (&philo->fork);
 }
 
-static pthread_mutex_t	*get_second_fork(t_philo *philo)
+pthread_mutex_t	*get_second_fork(t_philo *philo)
 {
 	if (&philo->fork > &philo->next->fork)
 		return (&philo->fork);

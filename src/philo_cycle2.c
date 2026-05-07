@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 01:03:33 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 15:00:38 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:59:20 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	is_eating(t_philo *philo)
 	}
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 	ft_usleep(philo->info->time_to_eat);
-	pthread_mutex_unlock(&philo->fork);
-	pthread_mutex_unlock(&philo->next->fork);
+	pthread_mutex_unlock(get_first_fork(philo));
+	pthread_mutex_unlock(get_second_fork(philo));
 }
 
 void	is_sleeping(t_philo *philo)
@@ -62,8 +62,9 @@ void	is_thinking(t_philo *philo)
 void	*kill_philo(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->printf_mutex);
-	printf("%llu %d died\n",
-		get_current_time_in_ms(), philo->number + 1);
+	if (!philo->info->end_simulation)
+		printf("%llu %d died\n",
+			get_current_time_in_ms(), philo->number + 1);
 	philo->info->end_simulation = 1;
 	pthread_mutex_unlock(&philo->info->printf_mutex);
 	return (NULL);

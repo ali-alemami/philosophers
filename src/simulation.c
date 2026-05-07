@@ -6,23 +6,11 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 14:30:09 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:54:30 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	is_philo_dead(t_philo *philo)
-{
-	unsigned long long	current_time;
-	unsigned long long	last_eat;
-
-	pthread_mutex_lock(&philo->info->printf_mutex);
-	current_time = get_current_time_in_ms();
-	last_eat = philo->last_eat_time;
-	pthread_mutex_unlock(&philo->info->printf_mutex);
-	return (current_time >= last_eat + philo->info->time_to_die);
-}
 
 static void	*check_for_philos_deaths(void *arg)
 {
@@ -37,7 +25,7 @@ static void	*check_for_philos_deaths(void *arg)
 	{
 		if (philo->info->maximum_eat_count != -1 && philo_eat_count(philo))
 			flag++;
-		if (is_philo_dead(philo))
+		if (get_end_of_simulation_value(philo) || is_philo_dead(philo))
 			return (kill_philo(philo));
 		i++;
 		philo = philo->next;
@@ -94,6 +82,28 @@ static void	*philo_cycle(void *arg)
 	return (NULL);
 }
 
+static int	create_philo_threads(t_philo *head)
+{
+	t_philo	*philo;
+	int		i;
+
+	philo = head;
+	i = 0;
+	while (i < philo->info->number_of_philos)
+	{
+		if (pthread_create(&philo->tid, NULL, philo_cycle, philo) != 0)
+		{
+			ft_putstr_fd("Error: pthread_create failed\n", 2);
+			end_simulation(philo);
+			join_philo_threads(head, i);
+			return (0);
+		}
+		philo = philo->next;
+		i++;
+	}
+	return (1);
+}
+
 void	simulation(t_philo *head)
 {
 	t_philo	*philo;
@@ -101,14 +111,16 @@ void	simulation(t_philo *head)
 
 	philo = head;
 	set_first_last_eat_time(head);
-	pthread_create(&head->info->death_thread, NULL,
-		check_for_philos_deaths, head);
-	i = 0;
-	while (i < philo->info->number_of_philos)
+	if (pthread_create(&head->info->death_thread, NULL,
+			check_for_philos_deaths, head) != 0)
 	{
-		pthread_create(&philo->tid, NULL, philo_cycle, philo);
-		philo = philo->next;
-		i++;
+		ft_putstr_fd("Error: death thread creation failed\n", 2);
+		return ;
+	}
+	if (!create_philo_threads(head))
+	{
+		pthread_join(head->info->death_thread, NULL);
+		return ;
 	}
 	philo = head;
 	i = 0;

@@ -69,3 +69,24 @@ int	init_all_mutexex(t_philo **head)
 	}
 	return (0);
 }
+
+void	join_philo_threads(t_philo *head, int index)
+{
+	t_philo	*philo;
+	int		i;
+
+	philo = head;
+	i = 0;
+	while (i < index)
+	{
+		pthread_join(philo->tid, NULL);
+		philo = philo->next;
+		i++;
+	}
+}
+
+void	destroy_all_mutexex(t_philo *head)
+{
+	destroy_fork_mutexex(head, get_fork_mutex, head->info->number_of_philos);
+	pthread_mutex_destroy(&head->info->printf_mutex);
+}
