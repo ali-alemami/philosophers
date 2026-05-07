@@ -10,7 +10,7 @@ The goal is to manage philosopher threads without data races, deadlocks, or star
 
 **Compilation:**
 ```bash
-cd philo
+cd philosophers
 make
 ```
 

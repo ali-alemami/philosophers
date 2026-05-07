@@ -17,11 +17,11 @@ void	is_eating(t_philo *philo)
 	unsigned long long	now;
 	unsigned long long	t;
 
-	now = get_current_time_in_ms();
-	t = now - philo->info->start_of_simulation;
 	pthread_mutex_lock(&philo->info->printf_mutex);
 	if (!philo->info->end_simulation)
 	{
+		now = get_current_time_in_ms();
+		t = now - philo->info->start_of_simulation;
 		printf("%llu %d is eating\n", t, philo->number + 1);
 		philo->last_eat_time = now;
 		philo->eat_count++;
