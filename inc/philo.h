@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:20:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 01:12:51 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 03:44:42 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@
 # include <stdlib.h>
 # include <limits.h>
 
-typedef enum s_philo_status
-{
-	INITIALIZED,
-	HAS_ONE_FORK,
-	HAS_TWO_FORKS,
-	IS_EATING,
-	IS_SLEEPING,
-	IS_THINKING,
-	DEAD
-}	t_philo_status;
 
 typedef struct s_info
 {
@@ -49,8 +39,6 @@ typedef struct s_philo
 	pthread_t			tid;
 	int					number;
 	pthread_mutex_t		fork;
-	pthread_mutex_t		mutex;
-	t_philo_status		status;
 	int					eat_count;
 	unsigned long long	last_eat_time;
 	struct s_philo		*next;
@@ -88,6 +76,7 @@ unsigned long long	get_current_time_in_ms(void);
 void				ft_usleep(unsigned long long ms);
 pthread_mutex_t		*get_fork_mutex(t_philo *philo);
 pthread_mutex_t		*get_status_mutex(t_philo *philo);
+void				ft_putstr_fd(char *s, int fd);
 void				ft_putstr_fd(char *s, int fd);
 int					ft_str_isdigit(char *str);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);

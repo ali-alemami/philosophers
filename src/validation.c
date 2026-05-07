@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 03:13:44 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 00:59:22 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 01:34:48 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static int	get_len(char *str)
 
 static int	validate_int_limits(char **argv)
 {
-	int	i;
+	char	*str;
+	int		i;
 
 	i = 1;
 	while (argv[i])
@@ -72,7 +73,10 @@ static int	validate_int_limits(char **argv)
 			i++;
 			continue ;
 		}
-		if (ft_strncmp(argv[i], "2147483647", 11) > 0)
+		str = argv[i];
+		while (*str == '0')
+			str++;
+		if (ft_strncmp(str, "2147483647", 11) > 0)
 		{
 			ft_putstr_fd("Error: the input exceeds the int limit\n", 2);
 			return (1);

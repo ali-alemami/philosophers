@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 21:08:38 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 00:59:36 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 03:44:42 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	connector(char **argv)
 		return ;
 	simulation(head);
 	destroy_all_mutexex(head, get_fork_mutex, head->info->number_of_philos);
-	destroy_all_mutexex(head, get_status_mutex, head->info->number_of_philos);
 	lstclear(&head);
 }
 

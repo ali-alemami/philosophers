@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:06:02 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/05 02:32:15 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 03:44:42 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static t_philo	*make_node(t_philo **head, t_info *info, int i)
 		return (NULL);
 	}
 	philo->number = i;
-	philo->status = INITIALIZED;
 	philo->eat_count = 0;
 	if (!(*head))
 		(*head) = philo;
@@ -80,18 +79,6 @@ static t_philo	*make_node(t_philo **head, t_info *info, int i)
 	philo->info = info;
 	return (philo);
 }
-
-// void	print_circular_list(t_philo *head)
-// {
-// 	t_philo	*tmp;
-// 	tmp = head;
-// 	while (tmp->next != head)
-// 	{
-// 		printf("philo number [%d]\n", tmp->number);
-// 		tmp = tmp->next;
-// 	}
-// 	printf("this is the last philo number [%d]\n", tmp->number);
-// }
 
 t_philo	*circualr_linked_list(t_info *info)
 {

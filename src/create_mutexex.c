@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 21:51:39 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 01:04:00 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 03:44:42 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,38 +53,9 @@ static int	init_fork_mutexex(t_philo **head)
 	return (0);
 }
 
-static int	init_status_mutexex(t_philo **head)
-{
-	t_philo	*philo;
-	int		i;
-
-	philo = *head;
-	i = 0;
-	while (philo->next != (*head))
-	{
-		if (pthread_mutex_init(&philo->mutex, NULL) != 0)
-		{
-			destroy_all_mutexex(*head,
-				get_fork_mutex, philo->info->number_of_philos);
-			destroy_all_mutexex(*head, get_status_mutex, i);
-			return (1);
-		}
-		philo = philo->next;
-		i++;
-	}
-	if (pthread_mutex_init(&philo->mutex, NULL) != 0)
-	{
-		destroy_all_mutexex(*head,
-			get_fork_mutex, philo->info->number_of_philos);
-		destroy_all_mutexex(*head, get_status_mutex, i);
-		return (1);
-	}
-	return (0);
-}
-
 int	init_all_mutexex(t_philo **head)
 {
-	if (init_fork_mutexex(head) == 1 || init_status_mutexex(head) == 1)
+	if (init_fork_mutexex(head) == 1)
 	{
 		lstclear(head);
 		return (1);
@@ -93,8 +64,6 @@ int	init_all_mutexex(t_philo **head)
 	{
 		destroy_all_mutexex(*head,
 			get_fork_mutex, (*head)->info->number_of_philos);
-		destroy_all_mutexex(*head,
-			get_status_mutex, (*head)->info->number_of_philos);
 		lstclear(head);
 		return (1);
 	}
