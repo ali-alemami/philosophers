@@ -28,36 +28,49 @@ static t_info	assign_argv_values(char **argv)
 	return (info);
 }
 
-static void	connector(char **argv)
+static int	print_error(char *msg)
+{
+	ft_putstr_fd(msg, 2);
+	return (1);
+}
+
+static int	runtime_validation(t_info *info)
+{
+	if (info->number_of_philos == 0)
+		return (print_error("Error: number of philosophers must be > 0\n"));
+	if (info->time_to_die == 0)
+		return (print_error("Error: time_to_die must be > 0\n"));
+	if (info->time_to_eat == 0)
+		return (print_error("Error: time_to_eat must be > 0\n"));
+	if (info->time_to_sleep == 0)
+		return (print_error("Error: time_to_sleep must be > 0\n"));
+	if (info->maximum_eat_count == 0)
+		return (print_error("Error: must_eat must be > 0\n"));
+	return (0);
+}
+
+static int	connector(char **argv)
 {
 	t_philo	*head;
 	t_info	info;
 
 	info = assign_argv_values(argv);
-	if (info.number_of_philos == 0)
-		return (ft_putstr_fd("Error: number of philosophers must be > 0\n", 2));
-	if (info.time_to_die == 0)
-		return (ft_putstr_fd("Error: time_to_die must be > 0\n", 2));
-	if (info.time_to_eat == 0)
-		return (ft_putstr_fd("Error: time_to_eat must be > 0\n", 2));
-	if (info.time_to_sleep == 0)
-		return (ft_putstr_fd("Error: time_to_sleep must be > 0\n", 2));
-	if (info.maximum_eat_count == 0)
-		return (ft_putstr_fd("Error: must_eat must be > 0\n", 2));
+	if (runtime_validation(&info))
+		return (1);
 	head = circualr_linked_list(&info);
 	if (!head)
-		return ;
+		return (1);
 	if (init_all_mutexex(&head) != 0)
-		return ;
+		return (1);
 	simulation(head);
 	destroy_all_mutexex(head);
 	lstclear(&head);
+	return (0);
 }
 
 int	main(int argc, char **argv)
 {
 	if (validate_all_args(argc, argv))
 		return (1);
-	connector(argv);
-	return (0);
+	return (connector(argv));
 }
