@@ -75,8 +75,6 @@ void				simulation(t_philo *head);
 unsigned long long	get_current_time_in_ms(void);
 void				ft_usleep(unsigned long long ms);
 pthread_mutex_t		*get_fork_mutex(t_philo *philo);
-pthread_mutex_t		*get_status_mutex(t_philo *philo);
-void				ft_putstr_fd(char *s, int fd);
 void				ft_putstr_fd(char *s, int fd);
 int					ft_str_isdigit(char *str);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);

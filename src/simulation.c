@@ -6,17 +6,22 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 14:46:36 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 01:14:52 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 04:05:22 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	helper(int *i, int *flag)
+static int	is_philo_dead(t_philo *philo)
 {
-	ft_usleep(5);
-	*i = 0;
-	*flag = 0;
+	unsigned long long	current_time;
+	unsigned long long	last_eat;
+
+	pthread_mutex_lock(&philo->info->printf_mutex);
+	current_time = get_current_time_in_ms();
+	last_eat = philo->last_eat_time;
+	pthread_mutex_unlock(&philo->info->printf_mutex);
+	return (current_time >= last_eat + philo->info->time_to_die);
 }
 
 static void	*check_for_philos_deaths(void *arg)
@@ -32,8 +37,7 @@ static void	*check_for_philos_deaths(void *arg)
 	{
 		if (philo->info->maximum_eat_count != -1 && philo_eat_count(philo))
 			flag++;
-		if (get_current_time_in_ms()
-			>= get_last_eat_time(philo) + philo->info->time_to_die)
+		if (is_philo_dead(philo))
 			return (kill_philo(philo));
 		i++;
 		philo = philo->next;
@@ -41,7 +45,9 @@ static void	*check_for_philos_deaths(void *arg)
 		{
 			if (flag == i)
 				return (end_simulation(philo));
-			helper(&i, &flag);
+			ft_usleep(2);
+			i = 0;
+			flag = 0;
 		}
 	}
 	return (NULL);
