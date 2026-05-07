@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 01:03:33 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/07 14:19:19 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:00:38 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	is_thinking(t_philo *philo)
 	if (philo->info->number_of_philos % 2 != 0)
 	{
 		think_time = (long long)philo->info->time_to_die
-			- (long long)philo->info->time_to_eat * 2
+			- (long long)philo->info->time_to_eat
 			- (long long)philo->info->time_to_sleep;
 		if (think_time > 0)
 			ft_usleep(think_time / 2);
