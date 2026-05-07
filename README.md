@@ -57,5 +57,3 @@ Claude (claude.ai) was used in the following parts of the project:
 - Discussing data race scenarios and how to reason about shared state between threads
 
 ---
-
-Main changes: trimmed the flavor text in the description, fixed the `time_to_die` wording, and added the output format section.
